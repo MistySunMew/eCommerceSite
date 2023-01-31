@@ -14,7 +14,13 @@ namespace eCommerceSite.Controllers
             
         }
 
-        [HttpGet]
+		public async Task<IActionResult> Index()
+		{
+			List<Game> games = await _context.Games.ToListAsync();
+			return View(games);
+		}
+
+		[HttpGet]
         public IActionResult Create()
         {
             return View();

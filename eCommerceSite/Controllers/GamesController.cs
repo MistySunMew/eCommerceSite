@@ -45,7 +45,7 @@ namespace eCommerceSite.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            Game game = await _context.Games.FindAsync(id);
+            Game? game = await _context.Games.FindAsync(id);
 
             if (game == null)
             {
@@ -70,5 +70,37 @@ namespace eCommerceSite.Controllers
 
             return View(game);
         }
-    }
+
+        [HttpGet]
+		public async Task<IActionResult> Delete(int id)
+		{
+			Game? game = await _context.Games.FindAsync(id);
+
+			if (game == null)
+			{
+				return NotFound();
+			}
+
+			return View(game);
+		}
+
+		[HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+		{
+			Game? game = await _context.Games.FindAsync(id);
+            if (game != null)
+            {
+                _context.Games.Remove(game);
+                await _context.SaveChangesAsync();
+                TempData["Message"] = $"{game.Title} was Deleted successfully!";
+            }
+
+            else 
+            {
+				TempData["Message"] = "Game not found!";
+			}
+
+			return RedirectToAction("Index");
+		}
+	}
 }

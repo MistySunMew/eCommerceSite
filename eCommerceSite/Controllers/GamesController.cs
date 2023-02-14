@@ -102,5 +102,17 @@ namespace eCommerceSite.Controllers
 
 			return RedirectToAction("Index");
 		}
+
+		public async Task<IActionResult> Details(int id)
+		{
+			Game? game = await _context.Games.FindAsync(id);
+
+			if (game == null)
+			{
+				return NotFound();
+			}
+
+			return View(game);
+		}
 	}
 }

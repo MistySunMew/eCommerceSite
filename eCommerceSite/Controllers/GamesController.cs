@@ -41,5 +41,34 @@ namespace eCommerceSite.Controllers
 
             return View(game);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            Game game = await _context.Games.FindAsync(id);
+
+            if (game == null)
+            {
+                return NotFound();
+            }
+            
+            return View(game);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Game game)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Games.Update(game);
+                await _context.SaveChangesAsync();
+
+                TempData["Message"] = $"{game.Title} was updated successfully!";
+
+                return RedirectToAction("Index");
+            }
+
+            return View(game);
+        }
     }
 }

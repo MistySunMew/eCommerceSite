@@ -38,5 +38,32 @@ namespace eCommerceSite.Controllers
 
 			return View(model);
 		}
+
+		[HttpGet]
+		public IActionResult Login()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Login(LoginViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				Member? m = (from member in _context.Members
+						   where member.Email == model.Email &&
+						   member.Password == model.Password
+						   select member).SingleOrDefault();
+
+				if (m != null)
+				{
+					return RedirectToAction("Index", "Home");
+				}
+
+				ModelState.AddModelError(string.Empty, "Account does not exist");
+			}
+			
+			return View(model);
+		}
 	}
 }

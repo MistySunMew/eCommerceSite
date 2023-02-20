@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace eCommerceSite.Models
 {
@@ -18,6 +19,7 @@ namespace eCommerceSite.Models
 		public string Username { get; set; }
 	}
 
+	[Keyless]
 	public class RegisterViewModel
 	{
 		[Required]
@@ -37,6 +39,7 @@ namespace eCommerceSite.Models
 		
 		[Required]
 		[Compare(nameof(Password))]
+		[DataType(DataType.Password)]
 		[Display(Name = "Confirm Password")]
 		public string ConfirmPassword { get; set; }
 	}

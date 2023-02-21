@@ -43,4 +43,18 @@ namespace eCommerceSite.Models
 		[Display(Name = "Confirm Password")]
 		public string ConfirmPassword { get; set; }
 	}
+
+	[Keyless]
+	public class LoginViewModel
+	{
+		[Required]
+		[EmailAddress]
+		[StringLength(100)]
+		public string Email { get; set; }
+
+		[Required]
+		[DataType(DataType.Password)]
+		[StringLength(100, MinimumLength = 6)]
+		public string Password { get; set; }
+	}
 }

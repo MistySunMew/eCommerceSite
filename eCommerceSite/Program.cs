@@ -11,6 +11,13 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddControllersWithViews();
 
+//Add session part 1
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+
+//builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddHttpContextAccessor();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,6 +34,9 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+//Add session part 2
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

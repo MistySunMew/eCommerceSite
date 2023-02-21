@@ -33,6 +33,8 @@ namespace eCommerceSite.Controllers
 				_context.Members.Add(m);
 				await _context.SaveChangesAsync();
 
+				LogUserIn(m);
+
 				return RedirectToAction("Index", "Home");
 			}
 
@@ -56,15 +58,26 @@ namespace eCommerceSite.Controllers
 						   select member).SingleOrDefault();
 
 				if (m != null)
-				{
-					HttpContext.Session.SetString("Email", m.Email);
-					return RedirectToAction("Index", "Home");
-				}
+                {
+                    LogUserIn(m);
+                    return RedirectToAction("Index", "Home");
+                }
 
-				ModelState.AddModelError(string.Empty, "Account does not exist");
+                ModelState.AddModelError(string.Empty, "Account does not exist");
 			}
 			
 			return View(model);
 		}
+
+        private void LogUserIn(Member? m)
+        {
+            HttpContext.Session.SetString("Email", m.Email);
+        }
+
+        public IActionResult Logout()
+		{
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
+        }
 	}
 }

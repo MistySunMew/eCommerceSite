@@ -57,6 +57,7 @@ namespace eCommerceSite.Controllers
 
 				if (m != null)
 				{
+					HttpContext.Session.SetString("Email", m.Email);
 					return RedirectToAction("Index", "Home");
 				}
 

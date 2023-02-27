@@ -14,9 +14,14 @@ namespace eCommerceSite.Controllers
             
         }
 
-		public async Task<IActionResult> Index()
+		public async Task<IActionResult> Index(int? id)
 		{
-			List<Game> games = await _context.Games.ToListAsync();
+            const int NumGamesToDisplayPerPage = 3;
+            const int PageOffset = 1;
+
+            int currentPage = id ?? 1;
+
+			List<Game> games = await _context.Games.Skip(NumGamesToDisplayPerPage * (currentPage - PageOffset)).Take(NumGamesToDisplayPerPage).ToListAsync();
 			return View(games);
 		}
 

@@ -56,7 +56,21 @@ else
     <h2>Oops we have encountered an error and have nothing to display</h2>    
 }
 
-@for (int i = 1; i <= Model.LastPage; i++)
-{
-	<a class="btn btn-primary" asp-action="Index" asp-route-pageNumber="@i">@i</a>
-}
+<nav arial-label="Game Catalog Pages">
+    <ul class="pagination">
+        @for (int i = 1; i <= Model.LastPage; i++)
+        {
+            if (i == Model.CurrentPage)
+            {
+                <li class="page-item active">
+                    <a class="page-link">@i</a>
+                </li>
+            }
+            else {
+	            <li class="page-item">
+                    <a class="page-link" asp-action="Index" asp-route-id="@i">@i</a>
+                </li>
+            }
+        }
+    </ul>
+</nav>
